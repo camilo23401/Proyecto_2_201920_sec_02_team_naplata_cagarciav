@@ -33,9 +33,9 @@ public class TestArregloDinamico {
 	@Test
 	public void testDarElemento() {
 		setUp2();
-		assertEquals("0", arreglo.darElemento(0));
-		assertEquals(""+TAMANO, arreglo.darElemento(TAMANO));
-		assertEquals(""+(TAMANO*2-1), arreglo.darElemento(TAMANO*2-1));
+		assertEquals("0", arreglo.darElementoPos(0));
+		assertEquals(""+TAMANO, arreglo.darElementoPos(TAMANO));
+		assertEquals(""+(TAMANO*2-1), arreglo.darElementoPos(TAMANO*2-1));
 	}
 
 }
