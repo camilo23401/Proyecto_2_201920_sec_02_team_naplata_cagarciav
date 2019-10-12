@@ -3,6 +3,7 @@ package controller;
 import java.util.Scanner;
 
 import model.logic.MVCModelo;
+import model.logic.ProyectoMundo;
 import view.MVCView;
 
 public class Controller {
@@ -24,7 +25,7 @@ public class Controller {
 	public Controller ()
 	{
 		view = new MVCView();
-		modelo = new MVCModelo();
+		
 	}
 		
 	public void run() 
@@ -86,5 +87,5 @@ public class Controller {
 			}
 		}
 		
-	}	
+		
 }
