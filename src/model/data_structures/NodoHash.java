@@ -2,6 +2,9 @@ package model.data_structures;
 
 public class NodoHash<K,V> implements Comparable <NodoHash<K,V>> {
 	private K llave; 
+	private V valor; 
+
+	private NodoHash<K, V> Siguiente; 
 	public K getLlave() {
 		return llave;
 	}
@@ -26,9 +29,7 @@ public class NodoHash<K,V> implements Comparable <NodoHash<K,V>> {
 		Siguiente = siguiente;
 	}
 
-	private V valor; 
 
-	private NodoHash<K, V> Siguiente; 
 
 	public NodoHash(K key, V value)
 	{ 

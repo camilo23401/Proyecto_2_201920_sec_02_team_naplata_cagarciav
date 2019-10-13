@@ -10,26 +10,26 @@ import org.junit.Test;
 
 import model.data_structures.MaxColaCP;
 import model.data_structures.MaxHeapCP;
-import model.logic.TravelTime;
+import model.logic.ViajeUber;
 
 public class PruebaColaPrioridadd {
-	private MaxHeapCP<TravelTime> arregloColaHeap;
-	private MaxColaCP<TravelTime> arreglo;
+	private MaxHeapCP<ViajeUber> arregloColaHeap;
+	private MaxColaCP<ViajeUber> arreglo;
 	
 	@Before
 	public void setUp1() throws IOException {
-		arregloColaHeap=new MaxHeapCP<TravelTime>(11);
-		arreglo=new MaxColaCP<TravelTime>();
-		TravelTime a=new TravelTime(0, 0, 0, 0, 9, 0);
-		TravelTime b=new TravelTime(0, 0, 0, 0, 14, 0);
-		TravelTime c=new TravelTime(0, 0, 0, 0, 5, 0);
-		TravelTime d=new TravelTime(0, 0, 0, 0, 3, 0);
-		TravelTime e=new TravelTime(0, 0, 0, 0, 20, 0);
-		TravelTime f=new TravelTime(0, 0, 0, 0, 1, 0);
-		TravelTime g=new TravelTime(0, 0, 0, 0, 45, 0);
-		TravelTime h=new TravelTime(0, 0, 0, 0, 17, 0);
-		TravelTime i=new TravelTime(0, 0, 0, 0, 7, 0);
-		TravelTime j=new TravelTime(0, 0, 0, 0, 9, 0);	
+		arregloColaHeap=new MaxHeapCP<ViajeUber>(11);
+		arreglo=new MaxColaCP<ViajeUber>();
+		ViajeUber a=new ViajeUber(0,0,Short.parseShort("0"), 9.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber b=new ViajeUber(0,0,Short.parseShort("0"), 14.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber c=new ViajeUber(0,0,Short.parseShort("0"), 5.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber d=new ViajeUber(0,0,Short.parseShort("0"), 3.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber e=new ViajeUber(0,0,Short.parseShort("0"), 20.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber f=new ViajeUber(0,0,Short.parseShort("0"), 1.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber g=new ViajeUber(0,0,Short.parseShort("0"), 45.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber h=new ViajeUber(0,0,Short.parseShort("0"), 17.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber i=new ViajeUber(0,0,Short.parseShort("0"), 7.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));
+		ViajeUber j=new ViajeUber(0,0,Short.parseShort("0"), 9.0,Short.parseShort("0"), Short.parseShort("0"), 0.0,0.0, 0.0, Short.parseShort("0"));	
 		arregloColaHeap.agregar(a);
 		arreglo.agregar(a);
 		arregloColaHeap.agregar(b);
