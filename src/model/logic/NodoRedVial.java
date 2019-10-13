@@ -1,12 +1,14 @@
 package model.logic;
 
+import com.google.gson.annotations.SerializedName;
+
 public class NodoRedVial {
- private short id;
+ private int id;
  private double longitud;
  private double latitud;
  
  
- public NodoRedVial(Short pId,double pLongitud,double pLatitud) {
+ public NodoRedVial(int pId,double pLongitud,double pLatitud) {
 	 id=pId;
 	 longitud=pLongitud;
 	 latitud=pLatitud;

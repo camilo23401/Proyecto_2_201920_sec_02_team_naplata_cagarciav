@@ -1,60 +1,26 @@
 package model.logic;
 
+import com.google.gson.annotations.SerializedName;
+
 import model.data_structures.Stack;
 
 public class ZonaUber {
-	private short id;
-
-	private String nombre;
-
-	private double perimetro;
-
-	private double area;
-
-	private Stack<Cordenadas>cordenadas;
+	@SerializedName("properties")
+	private String[] properties;
+	@SerializedName("geometry")
+	private String[] geometry;
 
 	public ZonaUber(short pId,String pNombre,double pPerimetro,double pArea, Stack<Cordenadas>pStack) {
-		cambiarId(pId);
-		cambiarNombre(pNombre);
-		cambiarPerimetro(pPerimetro);
-		cambiarArea(pArea);
-		cordenadas=pStack;
+		properties = new String[8];
+		geometry = new String[2];
 	}
-
-	public short darId() {
-		return id;
+	public String[] getProperties()
+	{
+		return properties;
 	}
-
-	public void cambiarId(short id) {
-		this.id = id;
-	}
-
-	public String darNombre() {
-		return nombre;
-	}
-
-	public void cambiarNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public double darPerimetro() {
-		return perimetro;
-	}
-
-	public void cambiarPerimetro(double perimetro) {
-		this.perimetro = perimetro;
-	}
-
-	public double darArea() {
-		return area;
-	}
-
-	public void cambiarArea(double area) {
-		this.area = area;
-	}
-
-	public Stack<Cordenadas> darCordenadas() {
-		return cordenadas;
+	public String[] getGeometry()
+	{
+		return geometry;
 	}
 
 

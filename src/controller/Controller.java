@@ -24,7 +24,7 @@ public class Controller {
 	public Controller ()
 	{
 		view = new MVCView();
-
+		proyecto = new ProyectoMundo();
 	}
 
 	public void run() 
@@ -40,7 +40,33 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 			case 1:
-
+				try
+				{
+					String trimestre = "";
+					System.out.println("Digite el número del semestre a consultar");
+					trimestre = lector.next();
+					if(Short.parseShort(trimestre)<1||Short.parseShort(trimestre)>4)
+					{
+						System.out.println("Valor de trimestre no válido");
+						break;
+					}
+					else
+					{
+						String[] rta = proyecto.agregarDatos(trimestre);
+						for(int i=0;i<rta.length;i++)
+						{
+							System.out.println(rta[i]);
+						}
+						proyecto.cargarInfoZonas();
+						proyecto.cargarInfoMalla();
+					}
+					
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				break;
 
 			case 2:
