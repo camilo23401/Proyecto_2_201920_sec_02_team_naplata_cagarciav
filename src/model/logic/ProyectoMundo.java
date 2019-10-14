@@ -105,19 +105,12 @@ public class ProyectoMundo
 	}
 	public void cargarInfoZonas() throws IOException
 	{
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new Gson();
 		int contador = 0;
-		BufferedReader lectorJson = new BufferedReader(new FileReader("data/bogota_cadastral.json"));
-	    JsonStreamParser p = new JsonStreamParser(lectorJson);
-
-        while(p.hasNext()){
-            JsonElement e = p.next();
-            if(e.isJsonObject()){
-            	ZonaUber zona = gson.fromJson(lectorJson, ZonaUber.class);
-            	System.out.println(zona);
-                System.out.println(zona.getProperties());
-            }
-        }
+		JsonReader lectorJson = new JsonReader(new FileReader("data/bogota_cadastral.json"));
+	    ZonaUber deMomento = gson.fromJson(lectorJson, ZonaUber.class);
+	    System.out.println(deMomento.getProperties());
+       
     }
 	public void cargarInfoMalla() throws IOException
 	{

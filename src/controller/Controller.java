@@ -52,13 +52,7 @@ public class Controller {
 					}
 					else
 					{
-						String[] rta = proyecto.agregarDatos(trimestre);
-						for(int i=0;i<rta.length;i++)
-						{
-							System.out.println(rta[i]);
-						}
 						proyecto.cargarInfoZonas();
-						proyecto.cargarInfoMalla();
 					}
 					
 					
