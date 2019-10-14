@@ -52,7 +52,13 @@ public class Controller {
 					}
 					else
 					{
+						String[] cargarViajes = proyecto.agregarDatos(trimestre);
+						for(int i=0;i<cargarViajes.length;i++)
+						{
+							System.out.println(cargarViajes[i]);
+						}
 						proyecto.cargarInfoZonas();
+						proyecto.cargarInfoMalla();
 					}
 					
 					

@@ -2,7 +2,8 @@ package model.logic;
 
 import com.google.gson.annotations.SerializedName;
 
-public class NodoRedVial {
+public class NodoRedVial implements Comparable<NodoRedVial> 
+{
  private int id;
  private double longitud;
  private double latitud;
@@ -24,5 +25,10 @@ public double darLongitud() {
 }
 public void cambiarLongitud(double longitud) {
 	this.longitud = longitud;
+}
+@Override
+public int compareTo(NodoRedVial o) {
+	// TODO Auto-generated method stub
+	return 0;
 }
 }

@@ -10,11 +10,17 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 
 	public ArbolRojoNegro()
 	{
-	
+		raiz = null;
+		System.out.println(this.size());
+		System.out.println(this.getHeight());  //SI ESTOS FUNCIONAS PORQUE PUTAS A PUT NI LO LLAMAN
 	}
 	public int size()
 	{
-		int tamanio = (int)raiz.darTamanio();
+		int tamanio = 0;
+		if(raiz!=null)
+		{
+			tamanio = (int)raiz.darTamanio();		
+		}
 		return tamanio;
 	}
 	public boolean isEmpty()

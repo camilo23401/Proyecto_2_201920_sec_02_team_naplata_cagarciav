@@ -1,6 +1,6 @@
 package model.logic;
 
-public class Cordenadas 
+public class Coordenadas implements Comparable <Coordenadas>
 {
 	private double latitud;
 	private double longitud;
@@ -8,7 +8,7 @@ public class Cordenadas
 		return latitud;
 	}
 
-	public Cordenadas(double pLatitud,double pLongitud) {
+	public Coordenadas(double pLatitud,double pLongitud) {
 		latitud=pLatitud;
 		longitud=pLongitud;
 	}
@@ -20,6 +20,12 @@ public class Cordenadas
 	}
 	public void cambiarLongitud(double longitud) {
 		this.longitud = longitud;
+	}
+
+	@Override
+	public int compareTo(Coordenadas arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
