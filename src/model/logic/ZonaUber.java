@@ -12,6 +12,7 @@ public String scanombre;
 public double shape_leng;
 public double shape_area;
 public ArregloDinamico<Coordenadas> coordenadas;
+int cantidadCoordenadas;
 
 	public ZonaUber(int pId, String pScanombre, double pShape_leng, double pShape_area) 
 	{
@@ -19,7 +20,8 @@ public ArregloDinamico<Coordenadas> coordenadas;
 		scanombre = pScanombre;
 		shape_leng = pShape_leng;
 		shape_area = pShape_area;
-		coordenadas = new ArregloDinamico<Coordenadas>(4);
+		coordenadas = new ArregloDinamico<Coordenadas>(200000);
+		cantidadCoordenadas=0;
 	}
 
 
@@ -30,10 +32,13 @@ public ArregloDinamico<Coordenadas> coordenadas;
 	}
 	public void meterCoordenadas(Coordenadas pCoordenada)
 	{
-		coordenadas.agregarPos(pCoordenada, 0);
+		cantidadCoordenadas++;
+		coordenadas.agregarPos(pCoordenada, cantidadCoordenadas);
 	}
-	
-	
+
+	public int darCantidadCordenadas() {
+		return cantidadCoordenadas;
+	}
 	
 
 }

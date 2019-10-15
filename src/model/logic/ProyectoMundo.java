@@ -38,11 +38,11 @@ public class ProyectoMundo
 	public ProyectoMundo()
 	{
 		gson = new Gson();
-		viajesUberMensual = new ArregloDinamico<ViajeUber>(2000);
-		viajesUberSemanal = new ArregloDinamico<ViajeUber>(2000);
-		viajesUberHorario = new ArregloDinamico<ViajeUber>(2000);
-		nodosViales = new ArregloDinamico<NodoRedVial>(2000);
-		zonasUber = new ArregloDinamico<ZonaUber>(2000);
+		viajesUberMensual = new ArregloDinamico<ViajeUber>(20000000);
+		viajesUberSemanal = new ArregloDinamico<ViajeUber>(20000000);
+		viajesUberHorario = new ArregloDinamico<ViajeUber>(30000000);
+		nodosViales = new ArregloDinamico<NodoRedVial>(20000000);
+		zonasUber = new ArregloDinamico<ZonaUber>(20000000);
 		prueba = new ArbolRojoNegro<Integer, Integer>();
 	}
 	public String[] agregarDatos(String pTrimestre) throws IOException
@@ -50,9 +50,12 @@ public class ProyectoMundo
 	{
 
 		String [] respuestas = new String[3];
-		respuestas [0]= "Número de viajes encontrados para el trimestre en el archivo mensual: " + cargarViajesMensuales(pTrimestre);
-		respuestas [1]= "Número de viajes encontrados para el trimestre en el archivo semanal: " + cargarViajesSemanales(pTrimestre);
-		respuestas [2]= "Número de viajes encontrados para el trimestre en el archivo por horas: " + cargarViajesHorarios(pTrimestre);
+		cargarViajesMensuales(pTrimestre);
+		cargarViajesSemanales(pTrimestre);
+		cargarViajesHorarios(pTrimestre);
+		respuestas [0]= "Número de viajes encontrados para los primeros dos trimestres en el archivo mensual: "+viajesUberMensual.darTamano();
+		respuestas [1]= "Número de viajes encontrados para los primeros dos trimestres en el archivo semanal: "+viajesUberSemanal.darTamano();
+		respuestas [2]= "Número de viajes encontrados para los primeros dos trimestres en el archivo por horas: "+viajesUberHorario.darTamano() ;
 
 		return respuestas;
 
@@ -140,7 +143,7 @@ public class ProyectoMundo
 			double leng = lengArchivo.getAsDouble();
 			JsonElement areaArchivo = properties.get("shape_area");
 			double area = areaArchivo.getAsDouble();
-			
+
 			ZonaUber nueva = new ZonaUber(idNum, nombre, leng, area);
 			zonasUber.agregar(nueva);
 			for(JsonElement accesoSegunda : complementoPrimera)
@@ -152,7 +155,7 @@ public class ProyectoMundo
 				nueva.meterCoordenadas(actual);
 			}
 			//System.out.println(nueva.coordenadas.darElementoPos(0).darLongitud() + "  " + nueva.coordenadas.darElementoPos(0).darLatitud());
-		
+
 		}
 		System.out.println("El número de zonas encontradas al cargar el archivo identificador de estas fue: "+zonasUber.darTamano());
 	}

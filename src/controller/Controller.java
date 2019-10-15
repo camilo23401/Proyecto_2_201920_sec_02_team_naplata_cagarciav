@@ -42,24 +42,17 @@ public class Controller {
 			case 1:
 				try
 				{
-					String trimestre = "";
-					System.out.println("Digite el número del semestre a consultar");
-					trimestre = lector.next();
-					if(Short.parseShort(trimestre)<1||Short.parseShort(trimestre)>4)
-					{
-						System.out.println("Valor de trimestre no válido");
-						break;
-					}
-					else
-					{
-						String[] cargarViajes = proyecto.agregarDatos(trimestre);
+					
+					
+						proyecto.agregarDatos("1");
+						String[] cargarViajes = proyecto.agregarDatos("2");
 						for(int i=0;i<cargarViajes.length;i++)
 						{
 							System.out.println(cargarViajes[i]);
 						}
 						proyecto.cargarInfoZonas();
 						proyecto.cargarInfoMalla();
-					}
+					
 					
 					
 				}
