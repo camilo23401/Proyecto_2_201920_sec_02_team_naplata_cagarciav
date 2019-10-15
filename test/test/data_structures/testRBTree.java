@@ -1,9 +1,14 @@
 package test.data_structures;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
+
 import org.junit.Test;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import model.data_structures.ArbolRojoNegro;
 
@@ -14,6 +19,11 @@ public class testRBTree
 	public void setUp()
 	{
 		arbol = new ArbolRojoNegro<Integer, Integer>();
+	}
+	public void setUp2()
+	{
+		arbol = new ArbolRojoNegro<Integer, Integer>();
+		arbol.put(2, 3);
 	}
 	@Test
 	public void testArbol()
@@ -28,11 +38,12 @@ public class testRBTree
 		arbol.put(2, 5);
 		arbol.put(3, 6);
 		arbol.put(1, 7);
-		assertEquals(1,arbol.getHeight());
+		assertEquals(1,arbol.getHeightRaiz());
 	}
 	@Test
 	public void testSize()
 	{
+		setUp();
 		arbol.put(3, 4);
 		arbol.put(4, 6);
 		arbol.put(2, 5);
@@ -51,13 +62,13 @@ public class testRBTree
 		assertTrue(arbol.get(2)==null);
 	}
 	@Test
-	public void testGetHeight()
+	public void testHeight()
 	{
 		setUp();
 		arbol.put(1, 5);
 		arbol.put(2, 2);
 		arbol.put(3, 7);
-		assertEquals(2, arbol.getHeight(), 0);
+		assertEquals(1, arbol.getHeightRaiz(), 0);
 	}
 	@Test
 	public void testMin()
@@ -76,5 +87,37 @@ public class testRBTree
 		arbol.put(2, 2);
 		arbol.put(3, 7);
 		assertEquals(3, arbol.max(), 0);
+	}
+	@Test
+	public void testKeys()
+	{
+		setUp();
+		arbol.put(1, 5);
+		arbol.put(2, 2);
+		arbol.put(3, 7);
+		
+		Iterator<Integer> rta = arbol.keys();
+		Integer valor = rta.next();
+		assertEquals(3, valor,0);
+		valor = rta.next();
+		assertEquals(1, valor,0);	
+	}
+	@Test
+	public void testIsEmpty()
+	{
+		setUp();
+		assertTrue(arbol.isEmpty());
+		setUp2();
+		assertFalse(arbol.isEmpty());
+	}
+	@Test
+	public void testCheck()
+	{
+		setUp();
+		arbol.put(1, 5);
+		arbol.put(2, 2);
+		arbol.put(3, 7);
+		arbol.put(4, 3);
+		assertTrue(arbol.check());
 	}
 }

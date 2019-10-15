@@ -182,6 +182,5 @@ public class ProyectoMundo
 		prueba.put(4, 6);
 		prueba.put(2, 5);
 		prueba.put(1, 7);
-		System.out.println(prueba.size());
 	}
 }

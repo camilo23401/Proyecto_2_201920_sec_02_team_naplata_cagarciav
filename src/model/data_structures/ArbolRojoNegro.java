@@ -2,6 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
+
 public class ArbolRojoNegro <K extends Comparable<K>, V> 
 {
 	private final static boolean RED = true;
@@ -39,11 +40,14 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 		{
 			return null;
 		}
-		return getV(raiz, pLlave);
+		else
+		{
+			return getV(raiz, pLlave);
+		}
+
 	}
 	public V getV(NodoArbol<K,V> pNodo, K pLlave)
 	{
-		V rta = null;
 		while(pNodo!=null)
 		{
 			int comparacion = pLlave.compareTo(pNodo.darLlave());
@@ -57,10 +61,10 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 			}
 			else
 			{
-				rta = pNodo.darValor();
+				return pNodo.darValor();
 			}
 		}
-		return rta;
+		return null;
 	}
 	public void put (K pLlave, V pValor)
 	{
@@ -89,10 +93,62 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 		{
 			pNodo.ponerValor(pValor);
 		}
+		
+		if(isRed(pNodo.darNodoDerecha()) && !isRed(pNodo.darNodoIzquierda()))
+		{
+			pNodo = rotarIzquierda(pNodo);
+		}
+		if(isRed(pNodo.darNodoIzquierda()) && isRed(pNodo.darNodoIzquierda().darNodoIzquierda()))
+		{
+			pNodo = rotarDerecha(pNodo);
+		}
+		if(isRed(pNodo.darNodoDerecha()) && isRed(pNodo.darNodoIzquierda()))
+		{
+			intercambiarColores(pNodo);
+		}
 		int nuevoTamanio = sizeAux(pNodo.darNodoDerecha()) + sizeAux(pNodo.darNodoIzquierda()) + 1;
 		pNodo.cambiarTamaño((short) nuevoTamanio);
 		return pNodo;
 	}
+	public boolean isRed(NodoArbol<K, V> pNodo)
+	{
+		if(pNodo==null)
+		{
+			return false;
+		}
+		return pNodo.darColor() == RED;
+	}
+	public NodoArbol<K, V> rotarDerecha(NodoArbol<K, V> pNodo)
+	{
+		NodoArbol<K, V> aux = pNodo.darNodoIzquierda();
+		pNodo.cambiarNodoIzquierda(aux.darNodoDerecha());
+		aux.cambiarNodoDerecha(pNodo);
+		aux.cambiarColor(pNodo.darColor());
+		pNodo.cambiarColor(RED);
+		aux.cambiarTamaño(pNodo.darTamanio());
+		short nuevoTamanio = (short) (sizeAux(pNodo.darNodoIzquierda())+sizeAux(pNodo.darNodoDerecha())+1);
+		pNodo.cambiarTamaño(nuevoTamanio);
+		return aux;
+	}
+	public NodoArbol<K, V> rotarIzquierda(NodoArbol<K, V> pNodo)
+	{
+		NodoArbol<K, V> aux = pNodo.darNodoDerecha();
+		pNodo.cambiarNodoDerecha(aux.darNodoIzquierda());
+		aux.cambiarNodoIzquierda(pNodo);
+		aux.cambiarColor(pNodo.darColor());
+		pNodo.cambiarColor(RED);
+		aux.cambiarTamaño(pNodo.darTamanio());
+		short nuevoTamanio = (short) (sizeAux(pNodo.darNodoIzquierda())+sizeAux(pNodo.darNodoDerecha())+1);
+		pNodo.cambiarTamaño(nuevoTamanio);
+		return aux;
+	}
+	public void intercambiarColores(NodoArbol<K, V> pNodo)
+	{
+		pNodo.cambiarColor(RED);
+		pNodo.darNodoIzquierda().cambiarColor(BLACK);
+		pNodo.darNodoDerecha().cambiarColor(BLACK);
+	}
+
 	public boolean contains(K pLlave)
 	{
 		if(get(pLlave)==null)
@@ -148,7 +204,7 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 			return maxAux(pNodo.darNodoDerecha());
 		}
 	}
-	public int getHeight()
+	public int getHeightRaiz()
 	{
 		return getHeightAux(raiz);
 	}
@@ -206,12 +262,157 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 			return leftKeys(pNodo.darNodoDerecha());
 		}
 	}
-	public Iterator<K> keysInRange(NodoArbol<K, V> pNodo)
+	public Iterator<K> keysInRange(K pLlaveBaja, K pLlaveAlta)
 	{
-		return null;
+		Stack<K> stack = new Stack<K>();
+		if(pLlaveAlta.compareTo(raiz.darLlave())<0)
+		{
+			boolean encontradoLimite = false;
+			Stack<K> llaves = leftKeys(raiz);
+			for(int i=0;i<llaves.darTamanio()&&!encontradoLimite;i++)
+			{
+				K llave = llaves.pop();
+				if(llave.compareTo(pLlaveBaja)<0)
+				{
+					encontradoLimite = true;
+				}
+				if(llave.compareTo(pLlaveBaja)>=0)
+				{
+					stack.push(llave);
+				}
+			}
+		}
+		else if(pLlaveAlta.compareTo(raiz.darLlave())>0)
+		{
+			boolean encontradoLimite = false;
+			Stack<K> llaves = rightKeys(raiz);
+			for(int i=0;i<llaves.darTamanio()&&!encontradoLimite;i++)
+			{
+				K llave = llaves.pop();
+				if(llave.compareTo(pLlaveBaja)<0)
+				{
+					encontradoLimite = true;
+				}
+				if(llave.compareTo(pLlaveBaja)>=0)
+				{
+					stack.push(llave);
+				}		
+			}
+		}
+		else if(pLlaveAlta.compareTo(raiz.darLlave())==0)
+		{
+			boolean encontradoLimite = false;
+			Iterator<K> llavess = keys();
+			while(llavess.hasNext()&&!encontradoLimite)
+			{
+				K llaveaux = llavess.next();
+				if(llaveaux.compareTo(pLlaveBaja)<0)
+				{
+					encontradoLimite = true;
+				}
+				if(llaveaux.compareTo(pLlaveBaja)>=0)
+				{
+					stack.push(llaveaux);
+				}		
+			}
+		}
+		return stack.iterator();
 	}
-	public Iterator<K> valuesInRange(NodoArbol<K, V> pNodo)
+	public Iterator<V> valuesInRange(K pLlaveBaja, K pLlaveAlta)
 	{
-		return null;
+		Iterator<K> llaves = keysInRange(pLlaveBaja, pLlaveAlta);
+		Stack<V> valoresEnRango = new Stack<V>();
+		while(llaves.hasNext())
+		{
+			K llave = llaves.next();
+			valoresEnRango.push(get(llave));
+		}
+		return valoresEnRango.iterator();
+	}
+	public boolean check()
+	{
+		return esSimetrico() && esConsistente() && esBalanceado() && es23();
+	}
+	public boolean esSimetrico()
+	{
+		return esSimetricoAux(raiz, null, null);
+	}
+	public boolean esSimetricoAux(NodoArbol<K, V> pNodo, K pMinimo, K pMaximo)
+	{
+		if(pNodo==null)
+		{
+			return true;
+		}
+		if(pMinimo != null && pNodo.darLlave().compareTo(pMinimo) <= 0)
+		{
+			return false;
+		}
+		if(pMaximo !=null && pNodo.darLlave().compareTo(pMaximo) >= 0)
+		{
+			return false;
+		}
+		return esSimetricoAux(pNodo.darNodoIzquierda(), pMinimo, pNodo.darLlave()) && esSimetricoAux(pNodo.darNodoDerecha(), pNodo.darLlave(), pMaximo);
+	}
+	public boolean esConsistente()
+	{
+		return esConsistenteAux(raiz);
+	}
+	public boolean esConsistenteAux(NodoArbol<K, V> pNodo)
+	{
+		if(pNodo==null)
+		{
+			return true;
+		}
+		if(pNodo.darTamanio() != sizeAux(pNodo.darNodoIzquierda())+ sizeAux(pNodo.darNodoDerecha())+1)
+		{
+			return false;
+		}
+		return esConsistenteAux(pNodo.darNodoIzquierda()) && esConsistenteAux(pNodo.darNodoDerecha());
+	}
+	public boolean esBalanceado()
+	{
+		int negro = 0;
+		NodoArbol<K, V> aux = raiz;
+		while(aux!=null)
+		{
+			if(aux.darColor()!=RED)
+			{
+				negro++;
+				aux = aux.darNodoIzquierda();
+			}
+		}
+		return esBalanceadoAux(raiz, negro);
+	}
+	public boolean esBalanceadoAux(NodoArbol<K, V> pNodo, int pNegro)
+	{
+		if(pNodo==null)
+		{
+			return pNegro ==0;
+		}
+		if(pNodo.darColor()!=RED)
+		{
+			pNegro--;
+		}
+		return esBalanceadoAux(pNodo.darNodoIzquierda(), pNegro) && esBalanceadoAux(pNodo.darNodoDerecha(), pNegro);
+	}
+	public boolean es23()
+	{
+		return es23Aux(raiz);
+	}
+	public boolean es23Aux(NodoArbol<K, V> pNodo)
+	{
+		if(pNodo==null)
+		{
+			return true;
+		}
+		if(isRed(pNodo.darNodoDerecha()))
+		{
+			return false;
+		}
+		if(pNodo != raiz && isRed(pNodo) && isRed(pNodo.darNodoIzquierda()))
+		{
+			return false;
+		}
+		return es23Aux(pNodo.darNodoIzquierda()) && es23Aux(pNodo.darNodoDerecha());
 	}
 }
