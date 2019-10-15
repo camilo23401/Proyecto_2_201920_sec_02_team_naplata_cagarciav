@@ -42,8 +42,6 @@ public class Controller {
 			case 1:
 				try
 				{
-					
-					
 						proyecto.agregarDatos("1");
 						String[] cargarViajes = proyecto.agregarDatos("2");
 						for(int i=0;i<cargarViajes.length;i++)
