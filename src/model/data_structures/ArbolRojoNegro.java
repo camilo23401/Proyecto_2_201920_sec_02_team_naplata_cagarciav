@@ -11,17 +11,18 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 	public ArbolRojoNegro()
 	{
 		raiz = null;
-		System.out.println(this.size());
-		System.out.println(this.getHeight());  //SI ESTOS FUNCIONAS PORQUE PUTAS A PUT NI LO LLAMAN
 	}
 	public int size()
 	{
-		int tamanio = 0;
-		if(raiz!=null)
+		return sizeAux(raiz);
+	}
+	public int sizeAux(NodoArbol<K, V> pNodo)
+	{
+		if(pNodo==null)
 		{
-			tamanio = (int)raiz.darTamanio();		
+			return 0;
 		}
-		return tamanio;
+		return pNodo.darTamanio();
 	}
 	public boolean isEmpty()
 	{
@@ -63,35 +64,34 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 	}
 	public void put (K pLlave, V pValor)
 	{
-		System.out.println(pLlave + "" + "" + pValor);
 		if(pLlave!=null && pValor!=null)
 		{
 			raiz = putAux(raiz, pLlave, pValor);
-			System.out.println(raiz);
 			raiz.cambiarColor(BLACK);
 		}
 	}
 	public NodoArbol<K, V> putAux(NodoArbol<K, V> pNodo, K pLlave, V pValor)
 	{
-		NodoArbol<K, V> nuevo = null;
 		if(pNodo==null)
 		{
-			nuevo = new NodoArbol<K, V>(pLlave, pValor, RED,(short)1);
+			return new NodoArbol<K, V>(pLlave, pValor, RED,(short)1);
 		}
 		int comparacion = pLlave.compareTo(pNodo.darLlave());
 		if(comparacion<0)
 		{
-			pNodo.cambiarNodoIzquierda(putAux(pNodo, pLlave, pValor));
+			pNodo.cambiarNodoIzquierda(putAux(pNodo.darNodoIzquierda(), pLlave, pValor));
 		}
 		else if(comparacion>0)
 		{
-			pNodo.cambiarNodoDerecha(putAux(pNodo,pLlave, pValor));
+			pNodo.cambiarNodoDerecha(putAux(pNodo.darNodoDerecha(),pLlave, pValor));
 		}
 		else
 		{
 			pNodo.ponerValor(pValor);
 		}
-		return nuevo;
+		int nuevoTamanio = sizeAux(pNodo.darNodoDerecha()) + sizeAux(pNodo.darNodoIzquierda()) + 1;
+		pNodo.cambiarTamaño((short) nuevoTamanio);
+		return pNodo;
 	}
 	public boolean contains(K pLlave)
 	{

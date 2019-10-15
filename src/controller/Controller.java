@@ -70,6 +70,7 @@ public class Controller {
 				break;
 
 			case 2:
+				proyecto.alimentarArbolPrueba();
 				break;
 
 			case 3:

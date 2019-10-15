@@ -16,6 +16,7 @@ import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import com.sun.javafx.geom.Area;
 
+import model.data_structures.ArbolRojoNegro;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Stack;
 
@@ -31,6 +32,7 @@ public class ProyectoMundo
 	private ArregloDinamico<ViajeUber> viajesUberHorario;
 	private ArregloDinamico<NodoRedVial> nodosViales;
 	private ArregloDinamico<ZonaUber> zonasUber;
+	private ArbolRojoNegro<Integer, Integer> prueba;
 
 
 	public ProyectoMundo()
@@ -41,6 +43,7 @@ public class ProyectoMundo
 		viajesUberHorario = new ArregloDinamico<ViajeUber>(2000);
 		nodosViales = new ArregloDinamico<NodoRedVial>(2000);
 		zonasUber = new ArregloDinamico<ZonaUber>(2000);
+		prueba = new ArbolRojoNegro<Integer, Integer>();
 	}
 	public String[] agregarDatos(String pTrimestre) throws IOException
 
@@ -169,5 +172,13 @@ public class ProyectoMundo
 			linea = lector.readLine();
 		}
 		System.out.println("El número de nodos de la malla vial es: " + nodosViales.darTamano());
+	}
+	public void alimentarArbolPrueba()
+	{
+		prueba.put(3, 4);
+		prueba.put(4, 6);
+		prueba.put(2, 5);
+		prueba.put(1, 7);
+		System.out.println(prueba.size());
 	}
 }
