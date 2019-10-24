@@ -107,7 +107,7 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 			intercambiarColores(pNodo);
 		}
 		int nuevoTamanio = sizeAux(pNodo.darNodoDerecha()) + sizeAux(pNodo.darNodoIzquierda()) + 1;
-		pNodo.cambiarTamaño((short) nuevoTamanio);
+		pNodo.cambiarTamanio((short) nuevoTamanio);
 		return pNodo;
 	}
 	public boolean isRed(NodoArbol<K, V> pNodo)
@@ -125,9 +125,9 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 		aux.cambiarNodoDerecha(pNodo);
 		aux.cambiarColor(pNodo.darColor());
 		pNodo.cambiarColor(RED);
-		aux.cambiarTamaño(pNodo.darTamanio());
+		aux.cambiarTamanio(pNodo.darTamanio());
 		short nuevoTamanio = (short) (sizeAux(pNodo.darNodoIzquierda())+sizeAux(pNodo.darNodoDerecha())+1);
-		pNodo.cambiarTamaño(nuevoTamanio);
+		pNodo.cambiarTamanio(nuevoTamanio);
 		return aux;
 	}
 	public NodoArbol<K, V> rotarIzquierda(NodoArbol<K, V> pNodo)
@@ -137,9 +137,9 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 		aux.cambiarNodoIzquierda(pNodo);
 		aux.cambiarColor(pNodo.darColor());
 		pNodo.cambiarColor(RED);
-		aux.cambiarTamaño(pNodo.darTamanio());
+		aux.cambiarTamanio(pNodo.darTamanio());
 		short nuevoTamanio = (short) (sizeAux(pNodo.darNodoIzquierda())+sizeAux(pNodo.darNodoDerecha())+1);
-		pNodo.cambiarTamaño(nuevoTamanio);
+		pNodo.cambiarTamanio(nuevoTamanio);
 		return aux;
 	}
 	public void intercambiarColores(NodoArbol<K, V> pNodo)

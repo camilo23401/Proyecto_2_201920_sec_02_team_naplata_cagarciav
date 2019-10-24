@@ -248,6 +248,19 @@ public class ProyectoMundo
 		orden.shellSort();
 		return orden;
 	}
+	
+	public ArregloDinamico<ViajeUber> nZonasMasAlNorte(int pNumZonas)
+	{
+	
+	}
+	public ArregloDinamico<ViajeUber> buscarNodosLocalizacion(double pLatitud, double pLongitud)
+	{
+		
+	}
+	public ArregloDinamico<ViajeUber> tiemposDeEsperaEnRango(double pMin, double pMax)
+	{
+		
+	}
 
 }
 
