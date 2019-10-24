@@ -45,17 +45,17 @@ public class Controller {
 			case 1:
 				try
 				{
-						proyecto.agregarDatos("1");
-						String[] cargarViajes = proyecto.agregarDatos("2");
-						for(int i=0;i<cargarViajes.length;i++)
-						{
-							System.out.println(cargarViajes[i]);
-						}
-						proyecto.cargarInfoZonas();
-						proyecto.cargarInfoMalla();
-					
-					
-					
+					proyecto.agregarDatos("1");
+					String[] cargarViajes = proyecto.agregarDatos("2");
+					for(int i=0;i<cargarViajes.length;i++)
+					{
+						System.out.println(cargarViajes[i]);
+					}
+					proyecto.cargarInfoZonas();
+					proyecto.cargarInfoMalla();
+
+
+
 				}
 				catch(Exception e)
 				{
@@ -70,11 +70,11 @@ public class Controller {
 				for (int i = 0; i <n; i++) {
 					System.out.println(retorno.darElementoPos(i));
 				}
-				
+
 				break;
 
 			case 3:
-			
+
 				System.out.println("Ingresar longitud");
 				String longitud  = lector.next();
 				System.out.println("Ingresar latitud");
@@ -82,13 +82,13 @@ public class Controller {
 				MaxColaCP<String> retorno1=proyecto.buscarNodosDelimitanZona(latitud, longitud);
 				System.out.println("El numero de nodos que delimitan la zona son: "+retorno1.darNumElementos());			
 				if(retorno1.darNumElementos()>0) {
-				for (int i = 0; i <retorno1.darNumElementos(); i++) {
-					System.out.println(retorno1.darElemento(i));
-				}
+					for (int i = 0; i <retorno1.darNumElementos(); i++) {
+						System.out.println(retorno1.darElemento(i));
+					}
 				}
 				else {
 					System.out.println("No se encontraron coordenadas con esas especificaciones");
-					
+
 				}
 				break;
 
@@ -103,9 +103,9 @@ public class Controller {
 				for (int i = 0; i < n1&&it1.darTamano()>0; i++) {
 					ViajeUber act=it1.darElementoPos(i);
 					System.out.println("Origen: "+act.darSourceid()+" , Destino:"+act.darDstid()+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
-						
+
 				}
-				
+
 				break;
 
 			case 5: 
@@ -114,7 +114,54 @@ public class Controller {
 			case 6: 
 
 				break;	
+			case 8: 
 
+				System.out.println("Ingresar id de origen");
+				int idOrigen  = Integer.parseInt(lector.next());
+				System.out.println("Ingresar hora");
+				int idHora  =Integer.parseInt(lector.next());
+				System.out.println("Ingresar N");
+				int n2  =Integer.parseInt(lector.next());
+				ArregloDinamico<ViajeUber>origenHora=proyecto.darViajesOrigenHora(idOrigen, idHora);
+				String origenzona=proyecto.buscarNombreZona(idOrigen);
+				for (int i = 0;origenHora.darTamano()>0&& i < n2; i++) {
+					ViajeUber actual=origenHora.darElementoPos(i);
+					String destinoZona=proyecto.buscarNombreZona(actual.darDstid());
+					System.out.println("Origen: "+origenzona+", Destino: "+destinoZona+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
+				}
+
+				break;	
+			case 9: 
+
+				System.out.println("Ingresar id de origen");
+				int idOrigen1  = Integer.parseInt(lector.next());
+				System.out.println("Ingresar hora inferior");
+				int horaInf  =Integer.parseInt(lector.next());
+				System.out.println("Ingresar hora superior");
+				int horaSup  =Integer.parseInt(lector.next());
+				System.out.println("Ingresar N");
+				int n3  =Integer.parseInt(lector.next());
+				ArregloDinamico<ViajeUber>origenHoraRango=proyecto.darViajesOrigenHoraRango(idOrigen1, horaInf, horaSup);
+				String origenzona1=proyecto.buscarNombreZona(idOrigen1);
+				for (int i = 0;origenHoraRango.darTamano()>0&& i < n3; i++) {
+					ViajeUber actual=origenHoraRango.darElementoPos(i);
+					String destinoZona=proyecto.buscarNombreZona(actual.darDstid());
+					System.out.println("Origen: "+origenzona1+", Destino: "+destinoZona+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
+				}
+
+				break;	
+			case 10: 
+
+
+				System.out.println("Ingresar N");
+				int n4  =Integer.parseInt(lector.next());
+				ArregloDinamico<String>listaZonas=proyecto.darZonaPriorizadas(n4);
+				for (int i = 0;listaZonas.darTamano()>0&& i < n4; i++) {
+					String[]arregl=listaZonas.darElementoPos(i).split(",");
+					System.out.println("Nombre Zona: "+arregl[0]+", Cantidad de nodos frontera: "+arregl[1]);
+				}
+
+				break;	
 			default: 
 				System.out.println("--------- \n Opcion Invalida !! \n---------");
 				break;

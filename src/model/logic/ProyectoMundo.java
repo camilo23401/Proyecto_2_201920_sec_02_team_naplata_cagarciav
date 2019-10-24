@@ -249,5 +249,48 @@ public class ProyectoMundo
 		return orden;
 	}
 
+	public ArregloDinamico<ViajeUber>darViajesOrigenHora(int zona,int hora){
+		ArregloDinamico<ViajeUber>retorno=new ArregloDinamico<ViajeUber>(1000000);
+		for (int i = 0; i < viajesUberHorario.darTamano(); i++) {
+			ViajeUber actual=viajesUberHorario.darElementoPos(i);
+			if(actual.darSourceid()==zona&&actual.darHora()==hora) {
+				retorno.agregar(actual);
+			}
+		}
+		return retorno;
+	}
+	public ArregloDinamico<ViajeUber>darViajesOrigenHoraRango(int zona,int horaInf,int horaSup){
+		ArregloDinamico<ViajeUber>retorno=new ArregloDinamico<ViajeUber>(1000000);
+		for (int i = 0; i < viajesUberHorario.darTamano(); i++) {
+			ViajeUber actual=viajesUberHorario.darElementoPos(i);
+			if(actual.darSourceid()==zona&&actual.darHora()>=horaInf&&actual.darHora()<=horaSup) {
+				retorno.agregar(actual);
+			}
+		}
+		return retorno;
+	}
+	
+	public String buscarNombreZona(int id) {
+		boolean encontrado=false;
+		String retorno="";
+		for (int i = 0; i < zonasUber.darTamano()&&!encontrado; i++) {
+			ZonaUber actual=zonasUber.darElementoPos(i);
+			if(actual.MOVEMENT_ID==id) {
+				retorno=actual.scanombre;
+				encontrado=true;
+			}
+		}
+		return retorno;
+	}
+	
+	public ArregloDinamico<String>darZonaPriorizadas(int n){
+		ArregloDinamico<String>retorno=new ArregloDinamico<String>(100000);
+		for (int i = 0; i < zonasUber.darTamano(); i++) {
+			ZonaUber actual=zonasUber.darElementoPos(i);
+			retorno.agregar(actual.scanombre+","+actual.darCantidadCordenadas());
+		}
+		retorno.shellSortString();
+		return retorno;
+	}
 }
 
