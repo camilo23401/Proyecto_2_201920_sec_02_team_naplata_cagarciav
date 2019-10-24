@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,6 +19,8 @@ import com.sun.javafx.geom.Area;
 
 import model.data_structures.ArbolRojoNegro;
 import model.data_structures.ArregloDinamico;
+import model.data_structures.HashSeparateChaining;
+import model.data_structures.MaxColaCP;
 import model.data_structures.Stack;
 
 public class ProyectoMundo
@@ -145,7 +148,7 @@ public class ProyectoMundo
 			double area = areaArchivo.getAsDouble();
 
 			ZonaUber nueva = new ZonaUber(idNum, nombre, leng, area);
-			zonasUber.agregar(nueva);
+
 			for(JsonElement accesoSegunda : complementoPrimera)
 			{
 				JsonArray segunda = accesoSegunda.getAsJsonArray();
@@ -154,6 +157,7 @@ public class ProyectoMundo
 				Coordenadas actual = new Coordenadas(latitud, longitud);
 				nueva.meterCoordenadas(actual);
 			}
+			zonasUber.agregar(nueva);
 			//System.out.println(nueva.coordenadas.darElementoPos(0).darLongitud() + "  " + nueva.coordenadas.darElementoPos(0).darLatitud());
 
 		}
@@ -176,11 +180,74 @@ public class ProyectoMundo
 		}
 		System.out.println("El número de nodos de la malla vial es: " + nodosViales.darTamano());
 	}
-	public void alimentarArbolPrueba()
-	{
-		prueba.put(3, 4);
-		prueba.put(4, 6);
-		prueba.put(2, 5);
-		prueba.put(1, 7);
+
+
+	public ArregloDinamico<String>darNLetrasMasFrecuentes(){
+		HashSeparateChaining<String,String> tabla=new HashSeparateChaining<String,String>(2000);
+		ArregloDinamico<String>retorno=new ArregloDinamico<String>(2000);
+		for (int i = 0; i < zonasUber.darTamano(); i++) {
+			ZonaUber actual=zonasUber.darElementoPos(i);
+			tabla.putInSet(String.valueOf(actual.scanombre.charAt(0)), actual.scanombre);
+		}
+
+		for (int i = 0; i < tabla.darCapacidad(); i++) {
+			String llave=tabla.getPosKey(i);
+			String parametro="";
+			if(llave!=null) {
+				int tamanioSet=tabla.getSetSize(llave);
+				Iterator<String>it=tabla.getSet(llave);
+				while(it.hasNext()) {
+					parametro+=","+it.next();
+				}
+
+				retorno.agregar(llave+", cantidad:"+tamanioSet+parametro);
+			}
+
+		}
+		retorno.shellSortString();
+		return retorno;
 	}
+
+	public MaxColaCP<String>buscarNodosDelimitanZona(String latitud,String longitud){
+		MaxColaCP<String>retorno=new MaxColaCP<>();
+		for (int i = 0; i < zonasUber.darTamano(); i++) {
+			ZonaUber actualZona=zonasUber.darElementoPos(i);
+			ArregloDinamico<Coordenadas>cor=actualZona.darCoordendas();
+			for (int j = 0; j < cor.darTamano(); j++) {
+				Coordenadas actual=cor.darElementoPos(j);
+				if(actual!=null&&Double.toString(actual.darLatitud()).length()>=5&&Double.toString(actual.darLongitud()).length()>=7) {
+					String lat=Double.toString(actual.darLatitud()).substring(0,5);	
+					String lon=Double.toString(actual.darLongitud()).substring(0,7);
+
+					if(lon.equals(longitud.substring(0,7))&&lat.equals(latitud.substring(0,5))) {
+						retorno.agregar(lon+","+lat+",  Zona:"+actualZona.scanombre);
+
+					}
+				}
+			}
+		}
+
+		return retorno;
+	}
+
+	public ArregloDinamico<ViajeUber>darTiempoPromedioViajesRango(double limiteInferior,double limiteSuperior){
+		ArbolRojoNegro<Double,ViajeUber>arbol=new ArbolRojoNegro<Double,ViajeUber>();
+		ArregloDinamico<ViajeUber>orden=new ArregloDinamico<ViajeUber>(2000000);
+
+		for (int i = 0; i<viajesUberMensual.darTamano() ; i++) {
+			ViajeUber actual=viajesUberMensual.darElementoPos(i);
+			if(actual.darTrimestre()==1) {
+				arbol.put(actual.darMeanTravelTime(),actual);
+			}	
+		}
+		Iterator<ViajeUber>it= arbol.valuesInRange(limiteInferior, limiteSuperior);
+		while(it.hasNext()) {
+			ViajeUber act=it.next();
+			orden.agregar(act);
+		}
+		orden.shellSort();
+		return orden;
+	}
+
 }
+

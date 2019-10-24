@@ -47,7 +47,7 @@ public class HashSeparateChaining<K extends Comparable<K>,V> implements HashTabl
 	}
 
 
-	@Override
+
 	public void putInSet(K llave, V valor) {
 		NodoHash<K,V>agregado=new NodoHash<K,V>(llave,valor);
 		if(tamanio>0&&listaNodos.contains(hashCode(llave))) {
@@ -103,6 +103,13 @@ public class HashSeparateChaining<K extends Comparable<K>,V> implements HashTabl
 		}
 		return retorno;
 	}
+	public K getPosKey(int pos) {
+		K retorno=null;
+		if(listaNodos.darElementoPos(pos)!=null) {
+			retorno= listaNodos.darElementoPos(pos).getLlave();
+		}
+		return retorno;
+	}
 
 
 	@Override
@@ -119,6 +126,15 @@ public class HashSeparateChaining<K extends Comparable<K>,V> implements HashTabl
 			}
 		}
 		return dinami.iterator();
+	}
+	public int getSetSize(K llave) {
+		Iterator<V>set=this.getSet(llave);
+		int i = 0;
+		while(set.hasNext()) {
+		    i++;
+		    set.next();
+		}
+		return i;
 	}
 
 	@Override

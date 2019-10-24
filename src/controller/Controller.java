@@ -1,9 +1,12 @@
 package controller;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
-
+import model.data_structures.ArregloDinamico;
+import model.data_structures.MaxColaCP;
 import model.logic.ProyectoMundo;
+import model.logic.ViajeUber;
 import view.MVCView;
 
 public class Controller {
@@ -61,13 +64,48 @@ public class Controller {
 				break;
 
 			case 2:
-				proyecto.alimentarArbolPrueba();
+				ArregloDinamico<String> retorno=proyecto.darNLetrasMasFrecuentes();
+				System.out.println("Ingresar valor N");
+				int n  = Integer.parseInt(lector.next());
+				for (int i = 0; i <n; i++) {
+					System.out.println(retorno.darElementoPos(i));
+				}
+				
 				break;
 
 			case 3:
+			
+				System.out.println("Ingresar longitud");
+				String longitud  = lector.next();
+				System.out.println("Ingresar latitud");
+				String latitud  = lector.next();
+				MaxColaCP<String> retorno1=proyecto.buscarNodosDelimitanZona(latitud, longitud);
+				System.out.println("El numero de nodos que delimitan la zona son: "+retorno1.darNumElementos());			
+				if(retorno1.darNumElementos()>0) {
+				for (int i = 0; i <retorno1.darNumElementos(); i++) {
+					System.out.println(retorno1.darElemento(i));
+				}
+				}
+				else {
+					System.out.println("No se encontraron coordenadas con esas especificaciones");
+					
+				}
 				break;
 
 			case 4:
+				System.out.println("Ingresar limite inferior");
+				double limInf  = Double.parseDouble(lector.next());
+				System.out.println("Ingresar limite superior");
+				double limSup  = Double.parseDouble(lector.next());
+				System.out.println("Ingresar N");
+				int n1  = Integer.parseInt(lector.next());
+				ArregloDinamico<ViajeUber>it1=proyecto.darTiempoPromedioViajesRango(limInf, limSup);
+				for (int i = 0; i < n1&&it1.darTamano()>0; i++) {
+					ViajeUber act=it1.darElementoPos(i);
+					System.out.println("Origen: "+act.darSourceid()+" , Destino:"+act.darDstid()+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
+						
+				}
+				
 				break;
 
 			case 5: 

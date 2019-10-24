@@ -3,6 +3,8 @@ package model.data_structures;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.logic.ViajeUber;
+
 /**
  * 2019-01-23
  * Estructura de Datos Arreglo Dinamico de Strings.
@@ -90,6 +92,25 @@ public class ArregloDinamico<T extends Comparable<T> >  {
 		} 
 
 	}
+	public void shellSortString() 
+	{ 
+		int n = tamanoAct; 
+
+		for (int intervalo = n/2; intervalo > 0; intervalo /= 2) 
+		{ 
+			for (int i = intervalo; i < n; i += 1) 
+			{ 
+				T temp = elementos[i]; 
+				int j; 
+				for (j = i; j >= intervalo &&compareToString((String)this.darElementoPos(j-intervalo),(String)temp)<0; j -= intervalo) {
+					elementos[j] = elementos[j - intervalo]; 
+				}
+
+				elementos[j] = temp; 
+			} 
+		} 
+
+	}
 
 	public T darElementoPos(int i) {
 
@@ -137,6 +158,20 @@ public class ArregloDinamico<T extends Comparable<T> >  {
 			}
 		}
 		return elemento1;
+	}
+	public int compareToString(String comp1 ,String comp) {
+		int comp1val=Integer.parseInt(comp1.split(",")[1]);
+		int comp2val=Integer.parseInt(comp.split(",")[1]);
+		double comparacion = comp1val-comp2val;
+		int compa=0;
+		if(comparacion > 0){
+			compa=1;
+		}
+		else if(comparacion < 0){
+			compa=-1;
+		}
+
+		return compa;
 	}
 
 }

@@ -262,65 +262,24 @@ public class ArbolRojoNegro <K extends Comparable<K>, V>
 			return leftKeys(pNodo.darNodoDerecha());
 		}
 	}
-	public Iterator<K> keysInRange(K pLlaveBaja, K pLlaveAlta)
-	{
-		Stack<K> stack = new Stack<K>();
-		if(pLlaveAlta.compareTo(raiz.darLlave())<0)
-		{
-			boolean encontradoLimite = false;
-			Stack<K> llaves = leftKeys(raiz);
-			for(int i=0;i<llaves.darTamanio()&&!encontradoLimite;i++)
-			{
-				K llave = llaves.pop();
-				if(llave.compareTo(pLlaveBaja)<0)
-				{
-					encontradoLimite = true;
-				}
-				if(llave.compareTo(pLlaveBaja)>=0)
-				{
-					stack.push(llave);
-				}
-			}
-		}
-		else if(pLlaveAlta.compareTo(raiz.darLlave())>0)
-		{
-			boolean encontradoLimite = false;
-			Stack<K> llaves = rightKeys(raiz);
-			for(int i=0;i<llaves.darTamanio()&&!encontradoLimite;i++)
-			{
-				K llave = llaves.pop();
-				if(llave.compareTo(pLlaveBaja)<0)
-				{
-					encontradoLimite = true;
-				}
-				if(llave.compareTo(pLlaveBaja)>=0)
-				{
-					stack.push(llave);
-				}		
-			}
-		}
-		else if(pLlaveAlta.compareTo(raiz.darLlave())==0)
-		{
-			boolean encontradoLimite = false;
-			Iterator<K> llavess = keys();
-			while(llavess.hasNext()&&!encontradoLimite)
-			{
-				K llaveaux = llavess.next();
-				if(llaveaux.compareTo(pLlaveBaja)<0)
-				{
-					encontradoLimite = true;
-				}
-				if(llaveaux.compareTo(pLlaveBaja)>=0)
-				{
-					stack.push(llaveaux);
-				}		
-			}
-		}
-		return stack.iterator();
-	}
+	 public Iterator<K> keys(K pLimiteInferior, K pLimiteSuperior) {
+	        if (pLimiteInferior == null) throw new IllegalArgumentException("No valido");
+	        if (pLimiteSuperior == null) throw new IllegalArgumentException("No valido");
+	        Stack<K> stack = new Stack<K>();
+	        keys(raiz, stack, pLimiteInferior, pLimiteSuperior);
+	        return stack.iterator();
+	    } 
+	 private void keys(NodoArbol<K,V> pNodoArbol, Stack<K> pStack, K pLimiteInferior, K pLimiteSuperior) { 
+	        if (pNodoArbol == null) return; 
+	        int cmplo = pLimiteInferior.compareTo(pNodoArbol.darLlave()); 
+	        int cmphi = pLimiteSuperior.compareTo(pNodoArbol.darLlave()); 
+	        if (cmplo < 0) keys(pNodoArbol.darNodoIzquierda(), pStack, pLimiteInferior, pLimiteSuperior); 
+	        if (cmplo <= 0 && cmphi >= 0) pStack.push(pNodoArbol.darLlave()); 
+	        if (cmphi > 0) keys(pNodoArbol.darNodoDerecha(), pStack, pLimiteInferior, pLimiteSuperior); 
+	    } 
 	public Iterator<V> valuesInRange(K pLlaveBaja, K pLlaveAlta)
 	{
-		Iterator<K> llaves = keysInRange(pLlaveBaja, pLlaveAlta);
+		Iterator<K> llaves = keys(pLlaveBaja, pLlaveAlta);
 		Stack<V> valoresEnRango = new Stack<V>();
 		while(llaves.hasNext())
 		{

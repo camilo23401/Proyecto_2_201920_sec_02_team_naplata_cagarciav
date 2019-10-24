@@ -40,5 +40,8 @@ int cantidadCoordenadas;
 		return cantidadCoordenadas;
 	}
 	
+	public ArregloDinamico<Coordenadas>darCoordendas(){	
+		return coordenadas;
+	}
 
 }

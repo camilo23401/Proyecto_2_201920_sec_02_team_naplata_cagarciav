@@ -66,26 +66,6 @@ public class ViajeUber implements Comparable <ViajeUber>
 	}
 	@Override
 	public int compareTo(ViajeUber comp) {
-		double comparacion = this.darMeanTravelTime()-comp.darMeanTravelTime();
-		int compa=0;
-		if(comparacion > 0){
-			compa=1;
-		}
-		else if(comparacion < 0){
-			compa=-1;
-		}
-		else{
-			double comparacion2=this.darDesviacionEstandarTiempo()-comp.darDesviacionEstandarTiempo();
-			if(comparacion2 > 0){
-				compa=1;
-			}
-			else if(comparacion2 < 0){
-				compa=-1;
-			}
-		}
-		return compa;
-	}
-	public int compareToZonal(ViajeUber comp) {
 		double comparacion = this.darSourceid()-comp.darSourceid();
 		int compa=0;
 		if(comparacion > 0){
