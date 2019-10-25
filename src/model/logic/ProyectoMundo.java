@@ -269,7 +269,7 @@ public class ProyectoMundo
 				organizarLlaves.agregar(llave);
 			}
 			organizarLlaves.shellSort();
-			for(int i = 0; i<organizarLlaves.darTamano()&&i<=pN; i++)
+			for(int i = 0; i<organizarLlaves.darTamano()&&i<pN; i++)
 			{
 				ZonaUber porAgregar = tabla.get(organizarLlaves.darElementoPos(i));
 				rta.agregar(porAgregar);
