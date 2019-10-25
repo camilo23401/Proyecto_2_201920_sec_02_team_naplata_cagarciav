@@ -19,9 +19,11 @@ import com.sun.javafx.geom.Area;
 
 import model.data_structures.ArbolRojoNegro;
 import model.data_structures.ArregloDinamico;
+import model.data_structures.HashLinearProbing;
 import model.data_structures.HashSeparateChaining;
 import model.data_structures.MaxColaCP;
 import model.data_structures.Stack;
+import model.data_structures.TablaHashLineal;
 
 public class ProyectoMundo
 {
@@ -248,18 +250,104 @@ public class ProyectoMundo
 		orden.shellSort();
 		return orden;
 	}
-	
-	public ArregloDinamico<ViajeUber> nZonasMasAlNorte(int pNumZonas)
+
+	public ArregloDinamico<ZonaUber> nZonasMasAlNorte(int pN)
 	{
-	
+		HashLinearProbing<Double, ZonaUber> tabla = new HashLinearProbing<Double, ZonaUber>(20000);
+		ArregloDinamico<Double> organizarLlaves= new ArregloDinamico<Double>(20000);
+		ArregloDinamico<ZonaUber> rta = new ArregloDinamico<ZonaUber>(200000);
+		for(int i= 0;i < zonasUber.darTamano(); i++)
+		{
+			ZonaUber actual = zonasUber.darElementoPos(i);
+			double llaveLatitud = mayorLatitudZonal(actual);
+			tabla.put(llaveLatitud, actual);
+		}
+			Iterator llavesRecuperada = tabla.keys();
+			while(llavesRecuperada.hasNext())
+			{
+				double llave = (double) llavesRecuperada.next();
+				organizarLlaves.agregar(llave);
+			}
+			organizarLlaves.shellSort();
+			for(int i = 0; i<organizarLlaves.darTamano()&&i<=pN; i++)
+			{
+				ZonaUber porAgregar = tabla.get(organizarLlaves.darElementoPos(i));
+				rta.agregar(porAgregar);
+			}
+			return rta;
 	}
-	public ArregloDinamico<ViajeUber> buscarNodosLocalizacion(double pLatitud, double pLongitud)
+	public double mayorLatitudZonal(ZonaUber pZona)
 	{
-		
+		ArregloDinamico<Coordenadas> listaCoordenadas = pZona.darCoordendas();
+		double latitudMayor = 0.0;
+		for(int i=0;i<listaCoordenadas.darTamano();i++)
+		{
+			Coordenadas actual = listaCoordenadas.darElementoPos(i);
+			if(actual!=null)
+			{
+				if(actual.darLatitud()>=latitudMayor)
+				{
+					latitudMayor = actual.darLatitud();
+				}	
+			}
+		}
+		return latitudMayor;
 	}
-	public ArregloDinamico<ViajeUber> tiemposDeEsperaEnRango(double pMin, double pMax)
+	public Coordenadas mayorLongitudZonalNodo(ZonaUber pZona)
 	{
-		
+		ArregloDinamico<Coordenadas> listaCoordenadas = pZona.darCoordendas();
+		double latitudMayor = 0.0;
+		Coordenadas mayor = null;
+		for(int i=0;i<listaCoordenadas.darTamano();i++)
+		{
+				Coordenadas actual = listaCoordenadas.darElementoPos(i);
+				if(actual!=null)
+				{
+					if(actual.darLatitud()>=latitudMayor)
+					{
+						mayor = actual;
+					}	
+				}
+			}
+		return mayor;
+	}
+	
+	public MaxColaCP<NodoRedVial> buscarNodosLocalizacion(String pLongitud, String pLatitud)
+	{
+		MaxColaCP<NodoRedVial> nodos = new MaxColaCP<NodoRedVial>();
+		for(int i=0; i<nodosViales.darTamano();i++)
+		{
+			NodoRedVial actual = nodosViales.darElementoPos(i);
+			if(actual!=null&&Double.toString(actual.darLatitud()).length()>=5&&Double.toString(actual.darLongitud()).length()>=7) {
+				String lat=Double.toString(actual.darLatitud()).substring(0,4);	
+				String lon=Double.toString(actual.darLongitud()).substring(0,6);
+
+				if(lon.equals(pLongitud.substring(0,6))&&lat.equals(pLatitud.substring(0,4))) 
+				{
+					nodos.agregar(actual);
+				}
+			}
+		}
+		return nodos;
+	}
+	public ArregloDinamico<ViajeUber> tiemposPromedioDesviacionEnRango(double pMin, double pMax)
+	{
+		ArbolRojoNegro<Double,ViajeUber> rta=new ArbolRojoNegro<Double,ViajeUber>();
+		ArregloDinamico<ViajeUber>listaOrdenada=new ArregloDinamico<ViajeUber>(2000000);
+		for (int i = 0; i<viajesUberMensual.darTamano() ; i++) 
+		{
+			ViajeUber actual=viajesUberMensual.darElementoPos(i);
+			if(actual.darTrimestre()==1) {
+				rta.put(actual.darDesviacionEstandarTiempo(),actual);
+			}	
+		}
+		Iterator<ViajeUber>it= rta.valuesInRange(pMin, pMax);
+		while(it.hasNext()) {
+			ViajeUber act=it.next();
+			listaOrdenada.agregar(act);
+		}
+		listaOrdenada.shellSort();
+		return listaOrdenada;
 	}
 
 	public ArregloDinamico<ViajeUber>darViajesOrigenHora(int zona,int hora){
@@ -282,7 +370,7 @@ public class ProyectoMundo
 		}
 		return retorno;
 	}
-	
+
 	public String buscarNombreZona(int id) {
 		boolean encontrado=false;
 		String retorno="";
@@ -295,7 +383,7 @@ public class ProyectoMundo
 		}
 		return retorno;
 	}
-	
+
 	public ArregloDinamico<String>darZonaPriorizadas(int n){
 		ArregloDinamico<String>retorno=new ArregloDinamico<String>(100000);
 		for (int i = 0; i < zonasUber.darTamano(); i++) {

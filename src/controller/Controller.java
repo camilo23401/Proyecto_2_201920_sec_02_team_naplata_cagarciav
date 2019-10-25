@@ -3,10 +3,14 @@ package controller;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import jdk.nashorn.internal.runtime.ListAdapter;
 import model.data_structures.ArregloDinamico;
+import model.data_structures.HashSeparateChaining;
 import model.data_structures.MaxColaCP;
+import model.logic.NodoRedVial;
 import model.logic.ProyectoMundo;
 import model.logic.ViajeUber;
+import model.logic.ZonaUber;
 import view.MVCView;
 
 public class Controller {
@@ -109,11 +113,53 @@ public class Controller {
 				break;
 
 			case 5: 
-				break;	
+				System.out.println("Digite el número de zonas más al norte por buscar");
+				int numZonas = lector.nextInt();
+				ArregloDinamico<ZonaUber> zonas = proyecto.nZonasMasAlNorte(numZonas);
+				for(int i=0;i<zonas.darTamano();i++)
+				{
+					ZonaUber actual = zonas.darElementoPos(i);
+					System.out.println("-------------------------");
+					System.out.println(actual.scanombre);
+					System.out.println("Latitud " + proyecto.mayorLatitudZonal(actual));
+					System.out.println("Longitud" + proyecto.mayorLongitudZonalNodo(actual).darLongitud());
+					System.out.println("-------------------------");
+				}
+				break;
 
 			case 6: 
-
+				System.out.println("Ingrese la longitud: ");
+				String longitudNodos = lector.next();
+				System.out.println("Ingrese la latitud: ");
+				String latitudNodos = lector.next();
+				MaxColaCP<NodoRedVial> nodos = proyecto.buscarNodosLocalizacion(longitudNodos,latitudNodos);
+				for(int i=0;i<nodos.darNumElementos();i++)
+				{
+					NodoRedVial actual = nodos.darElemento(i);
+					System.out.println("----------------------");
+					System.out.println("Viaje número " + i);
+					System.out.println("Id " + actual.darId());
+					System.out.println("Latitud "+actual.darLatitud());
+					System.out.println("Longitud "+actual.darLongitud());
+					System.out.println("----------------------");
+				}
+				System.out.println("El número de elementos encontrado fue: " + nodos.darNumElementos());
 				break;	
+			case 7:
+				System.out.println("Ingresar limite inferior");
+				double limiteInferior  = Double.parseDouble(lector.next());
+				System.out.println("Ingresar limite superior");
+				double limiteSuperior  = Double.parseDouble(lector.next());
+				System.out.println("Ingresar N");
+				int n2  = Integer.parseInt(lector.next());
+				ArregloDinamico<ViajeUber>it2=proyecto.darTiempoPromedioViajesRango(limiteInferior, limiteSuperior);
+				for (int i = 0; i < n2&&it2.darTamano()>0; i++) 
+				{
+					ViajeUber act=it2.darElementoPos(i);
+					System.out.println("Origen: "+act.darSourceid()+" , Destino:"+act.darDstid()+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
+
+				}
+				break;
 			case 8: 
 
 				System.out.println("Ingresar id de origen");
@@ -121,10 +167,10 @@ public class Controller {
 				System.out.println("Ingresar hora");
 				int idHora  =Integer.parseInt(lector.next());
 				System.out.println("Ingresar N");
-				int n2  =Integer.parseInt(lector.next());
+				int n3  =Integer.parseInt(lector.next());
 				ArregloDinamico<ViajeUber>origenHora=proyecto.darViajesOrigenHora(idOrigen, idHora);
 				String origenzona=proyecto.buscarNombreZona(idOrigen);
-				for (int i = 0;origenHora.darTamano()>0&& i < n2; i++) {
+				for (int i = 0;origenHora.darTamano()>0&& i < n3; i++) {
 					ViajeUber actual=origenHora.darElementoPos(i);
 					String destinoZona=proyecto.buscarNombreZona(actual.darDstid());
 					System.out.println("Origen: "+origenzona+", Destino: "+destinoZona+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
@@ -140,10 +186,10 @@ public class Controller {
 				System.out.println("Ingresar hora superior");
 				int horaSup  =Integer.parseInt(lector.next());
 				System.out.println("Ingresar N");
-				int n3  =Integer.parseInt(lector.next());
+				int n4  =Integer.parseInt(lector.next());
 				ArregloDinamico<ViajeUber>origenHoraRango=proyecto.darViajesOrigenHoraRango(idOrigen1, horaInf, horaSup);
 				String origenzona1=proyecto.buscarNombreZona(idOrigen1);
-				for (int i = 0;origenHoraRango.darTamano()>0&& i < n3; i++) {
+				for (int i = 0;origenHoraRango.darTamano()>0&& i < n4; i++) {
 					ViajeUber actual=origenHoraRango.darElementoPos(i);
 					String destinoZona=proyecto.buscarNombreZona(actual.darDstid());
 					System.out.println("Origen: "+origenzona1+", Destino: "+destinoZona+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
@@ -154,9 +200,9 @@ public class Controller {
 
 
 				System.out.println("Ingresar N");
-				int n4  =Integer.parseInt(lector.next());
-				ArregloDinamico<String>listaZonas=proyecto.darZonaPriorizadas(n4);
-				for (int i = 0;listaZonas.darTamano()>0&& i < n4; i++) {
+				int n5  =Integer.parseInt(lector.next());
+				ArregloDinamico<String>listaZonas=proyecto.darZonaPriorizadas(n5);
+				for (int i = 0;listaZonas.darTamano()>0&& i < n5; i++) {
 					String[]arregl=listaZonas.darElementoPos(i).split(",");
 					System.out.println("Nombre Zona: "+arregl[0]+", Cantidad de nodos frontera: "+arregl[1]);
 				}
