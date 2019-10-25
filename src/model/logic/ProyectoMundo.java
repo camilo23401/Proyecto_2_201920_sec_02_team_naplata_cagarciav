@@ -393,5 +393,32 @@ public class ProyectoMundo
 		retorno.shellSortString();
 		return retorno;
 	}
+
+	public int graficaAscii(int zona){
+		int cantidad=0;
+		for (int j = 0; j < zonasUber.darTamano(); j++) {
+			int idZona=zonasUber.darElementoPos(j).MOVEMENT_ID;
+			boolean encontradoSem1=false;
+			boolean encontradoSem2=false;
+			boolean enc=false;
+			for (int i = 0; i < viajesUberHorario.darTamano()&&!enc; i++) {
+				ViajeUber actual=viajesUberHorario.darElementoPos(i);
+				if(actual.darDstid()==idZona&&actual.darSourceid()==zona&&actual.darTrimestre()==1&&!encontradoSem1) {
+					cantidad++;
+					encontradoSem1=true;
+				}
+				else if(actual.darDstid()==idZona&&actual.darSourceid()==zona&&actual.darTrimestre()==2&&!encontradoSem2) {
+					cantidad++;
+					encontradoSem2=true;
+				}
+				enc=(encontradoSem1==true&&encontradoSem2==true);
+			}
+		}
+		return cantidad;
+	}
+	
+	public int darIdZonaPos(int n) {
+		return zonasUber.darElementoPos(n).MOVEMENT_ID;
+	}
 }
 

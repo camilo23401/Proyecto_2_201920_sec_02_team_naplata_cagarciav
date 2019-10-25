@@ -24,6 +24,7 @@ public class MVCView
 			System.out.println("8.Retornar todos los tiempos de viaje promedio que salen de una zona dada y a una hora dada.");
 			System.out.println("9.Retornar todos los tiempos de viaje que llegan de una zona dada y en un rango de horas.");
 			System.out.println("10. Obtener las N zonas priorizadas por la mayor cantidad de nodos que definen su frontera");
+			System.out.println("11.Generar Tabla Ascii");
 			System.out.println("12. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}

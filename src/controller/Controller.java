@@ -208,6 +208,24 @@ public class Controller {
 				}
 
 				break;	
+			case 11: 
+				System.out.println("Este metodo puede tardar varios minutos  en procesar");
+				System.out.println("Ingresar las N zonas a mostrar");
+				int n8=Integer.parseInt(lector.next());
+				for (int i = 0; i < n8; i++) {
+					int idzona=proyecto.darIdZonaPos(i);
+					int datos=proyecto.graficaAscii(idzona);
+					int datosFaltantes=2320-datos;
+					int tamanio=(datosFaltantes*100)/2320;
+					int porcentaje=tamanio/2;
+					String por="";
+					for (int j = 0; j < porcentaje; j++) {
+						por+="*";
+					}
+					System.out.println((i+1)+"."+por);
+				}
+			
+				break;
 			default: 
 				System.out.println("--------- \n Opcion Invalida !! \n---------");
 				break;
