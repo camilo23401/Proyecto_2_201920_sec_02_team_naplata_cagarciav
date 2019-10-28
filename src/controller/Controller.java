@@ -72,7 +72,15 @@ public class Controller {
 				System.out.println("Ingresar valor N");
 				int n  = Integer.parseInt(lector.next());
 				for (int i = 0; i <n; i++) {
-					System.out.println(retorno.darElementoPos(i));
+					String[]resp=retorno.darElementoPos(i).split(",");
+					System.out.println("Letra "+resp[0]);
+					System.out.println("Cantidad de repeticiones "+resp[1]);
+					System.out.println("Mostrando las primeras 20 zonas");
+					for (int j = 2; j <20; j++) {
+						System.out.println(resp[j]);
+						
+					}
+				
 				}
 
 				break;
