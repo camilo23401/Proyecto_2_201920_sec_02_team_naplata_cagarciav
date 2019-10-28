@@ -156,7 +156,7 @@ public class Controller {
 				for (int i = 0; i < n2&&it2.darTamano()>0; i++) 
 				{
 					ViajeUber act=it2.darElementoPos(i);
-					System.out.println("Origen: "+proyecto.buscarNombreZona(act.darSourceid())+" , Destino:"+proyecto.buscarNombreZona(act.darDstid())+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
+					System.out.println("Origen: "+proyecto.buscarNombreZona(act.darSourceid())+" , Destino:"+proyecto.buscarNombreZona(act.darDstid())+", Mes:"+act.darMes()+", Desviacion estandar:"+act.darDesviacionEstandarTiempo());
 
 				}
 				break;
@@ -179,7 +179,7 @@ public class Controller {
 				break;	
 			case 9: 
 
-				System.out.println("Ingresar id de origen");
+				System.out.println("Ingresar id de destino");
 				int idOrigen1  = Integer.parseInt(lector.next());
 				System.out.println("Ingresar hora inferior");
 				int horaInf  =Integer.parseInt(lector.next());
@@ -188,11 +188,11 @@ public class Controller {
 				System.out.println("Ingresar N");
 				int n4  =Integer.parseInt(lector.next());
 				ArregloDinamico<ViajeUber>origenHoraRango=proyecto.darViajesOrigenHoraRango(idOrigen1, horaInf, horaSup);
-				String origenzona1=proyecto.buscarNombreZona(idOrigen1);
+				String destinoZona1=proyecto.buscarNombreZona(idOrigen1);
 				for (int i = 0;origenHoraRango.darTamano()>0&& i < n4; i++) {
 					ViajeUber actual=origenHoraRango.darElementoPos(i);
-					String destinoZona=proyecto.buscarNombreZona(actual.darDstid());
-					System.out.println("Origen: "+origenzona1+", Destino: "+destinoZona+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
+					String origenzona1=proyecto.buscarNombreZona(actual.darSourceid());
+					System.out.println("Destino: "+destinoZona1+", Origen: "+origenzona1+", Hora: "+actual.darHora()+", TiempoPromedio: "+actual.darMeanTravelTime());
 				}
 
 				break;	

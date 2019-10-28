@@ -364,7 +364,7 @@ public class ProyectoMundo
 		ArregloDinamico<ViajeUber>retorno=new ArregloDinamico<ViajeUber>(1000000);
 		for (int i = 0; i < viajesUberHorario.darTamano(); i++) {
 			ViajeUber actual=viajesUberHorario.darElementoPos(i);
-			if(actual.darSourceid()==zona&&actual.darHora()>=horaInf&&actual.darHora()<=horaSup) {
+			if(actual.darDstid()==zona&&actual.darHora()>=horaInf&&actual.darHora()<=horaSup) {
 				retorno.agregar(actual);
 			}
 		}
