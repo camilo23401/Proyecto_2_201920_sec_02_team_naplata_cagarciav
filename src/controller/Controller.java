@@ -152,7 +152,7 @@ public class Controller {
 				double limiteSuperior  = Double.parseDouble(lector.next());
 				System.out.println("Ingresar N");
 				int n2  = Integer.parseInt(lector.next());
-				ArregloDinamico<ViajeUber>it2=proyecto.darTiempoPromedioViajesRango(limiteInferior, limiteSuperior);
+				ArregloDinamico<ViajeUber>it2=proyecto.tiemposPromedioDesviacionEnRango(limiteInferior, limiteSuperior);
 				for (int i = 0; i < n2&&it2.darTamano()>0; i++) 
 				{
 					ViajeUber act=it2.darElementoPos(i);

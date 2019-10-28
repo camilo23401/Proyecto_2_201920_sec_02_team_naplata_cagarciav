@@ -202,7 +202,7 @@ public class ProyectoMundo
 					parametro+=","+it.next();
 				}
 
-				retorno.agregar(llave+", cantidad:"+tamanioSet+parametro);
+				retorno.agregar(llave+","+tamanioSet+parametro);
 			}
 
 		}
