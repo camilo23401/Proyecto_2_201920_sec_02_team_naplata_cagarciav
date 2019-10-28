@@ -106,7 +106,7 @@ public class Controller {
 				ArregloDinamico<ViajeUber>it1=proyecto.darTiempoPromedioViajesRango(limInf, limSup);
 				for (int i = 0; i < n1&&it1.darTamano()>0; i++) {
 					ViajeUber act=it1.darElementoPos(i);
-					System.out.println("Origen: "+act.darSourceid()+" , Destino:"+act.darDstid()+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
+					System.out.println("Origen: "+proyecto.buscarNombreZona(act.darSourceid())+" , Destino:"+proyecto.buscarNombreZona(act.darDstid())+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
 
 				}
 
@@ -137,7 +137,7 @@ public class Controller {
 				{
 					NodoRedVial actual = nodos.darElemento(i);
 					System.out.println("----------------------");
-					System.out.println("Viaje número " + i);
+					System.out.println("Nodo número " + i);
 					System.out.println("Id " + actual.darId());
 					System.out.println("Latitud "+actual.darLatitud());
 					System.out.println("Longitud "+actual.darLongitud());
@@ -156,7 +156,7 @@ public class Controller {
 				for (int i = 0; i < n2&&it2.darTamano()>0; i++) 
 				{
 					ViajeUber act=it2.darElementoPos(i);
-					System.out.println("Origen: "+act.darSourceid()+" , Destino:"+act.darDstid()+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
+					System.out.println("Origen: "+proyecto.buscarNombreZona(act.darSourceid())+" , Destino:"+proyecto.buscarNombreZona(act.darDstid())+", Mes:"+act.darMes()+", Tiempo Promedio:"+act.darMeanTravelTime());
 
 				}
 				break;
